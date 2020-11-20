@@ -172,6 +172,7 @@ class color:
 
         return self.__json["hex"]["value"]
 
+    @property
     def hex_clean(self,) -> str:
         """ The color, represented as a clear hex string (without `#`).
         For instance, `0047AB`.
