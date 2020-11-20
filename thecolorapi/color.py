@@ -10,29 +10,42 @@ class color:
     # - - - I N I T - M E T H O D S - - - #
 
     def __init__(self,
-                 hex: str = None,
-                 rgb: Tuple[int, int, int] = None,
-                 hsl: Tuple[int, float, float] = None,
-                 cmyk: Tuple[int, int, int, int] = None,
+                 **kwargs,
                  ) -> None:
 
-        inputs = [hex, rgb, hsl, cmyk]
-        if sum(x is not None for x in inputs) != 1:
-            # If color specified more then once,
-            # or not specified at all
-            raise ValueError("Specify one color (single format) at a time")
+        if len(kwargs) > 1:
+            raise ValueError("Specify a color with only one format")
 
-        if hex:
-            self._request_by_hex(hex)
+        if not kwargs:
+            self._request_random_color()
+            return
 
-        if rgb:
-            self._request_by_rgb(rgb)
+        if "hex" in kwargs:
+            self._request_by_hex(kwargs["hex"])
+            return
 
-        if hsl:
-            self._request_by_hsl(hsl)
+        if "rgb" in kwargs:
+            self._request_by_rgb(kwargs["rgb"])
+            return
 
-        if cmyk:
-            self._request_by_cmyk(cmyk)
+        if "hsl" in kwargs:
+            self._request_by_hsl(kwargs["hsl"])
+            return
+
+        if "cmyk" in kwargs:
+            self._request_by_cmyk(kwargs["cmyk"])
+            return
+
+        raise TypeError("Invalid color format")
+
+    def _request_random_color(self,) -> None:
+
+        response = requests.get("https://www.thecolorapi.com/random")
+
+        if response.status_code != 200:
+            raise ValueError(response.json["message"])
+
+        self.__json = response.json()
 
     def _request_by_hex(self,
                         value: str,
