@@ -1,1 +1,1 @@
-from .color import color
+from .color import Color

@@ -2,7 +2,7 @@ import requests
 from typing import Tuple
 
 
-class color:
+class Color:
 
     __HEX_CHARS = ('0', '1', '2', '3', '4', '5', '6', '7',
                    '8', '9', 'a', 'b', 'c', 'd', 'e', 'f')
@@ -285,6 +285,14 @@ class color:
         """
 
         return self.__json["contrast"]["value"]
+
+    def contrast(self,):
+        """ A `Color` object representing the opposite of this color (black or
+        white). Useful for text color when this color is the background color,
+        for example.
+        """
+
+        return Color(hex=self.contrast_hex)
 
     @property
     def name(self,) -> str:
