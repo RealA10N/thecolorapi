@@ -129,7 +129,7 @@ class Color:
         value[0] = value[0] % 360
 
         # force saturation and lightness to be between 0 and 100
-        value[1:] = [minmax(v, 0, 100) for v in value[1:]]
+        value[1:] = [self.minmax(v, 0, 100) for v in value[1:]]
 
         # Convert to string
         value = (str(color) for color in value)
